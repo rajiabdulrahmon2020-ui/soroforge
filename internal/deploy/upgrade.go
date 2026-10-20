@@ -137,6 +137,9 @@ func (s *Service) Upgrade(ctx context.Context, req UpgradeRequest) (_ *UpgradeRe
 	if err != nil {
 		return nil, err
 	}
+	if err := s.checkRequireNotes(r, req.Notes, req.DryRun); err != nil {
+		return nil, err
+	}
 
 	// Same guarantee as Deploy: a failed upgrade — an invocation the contract
 	// rejected, a submission that never landed — is recorded as an attempt and

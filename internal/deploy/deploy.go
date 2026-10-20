@@ -139,6 +139,9 @@ func (s *Service) Deploy(ctx context.Context, req DeployRequest) (_ *DeployResul
 	if err != nil {
 		return nil, err
 	}
+	if err := s.checkRequireNotes(r, req.Notes, req.DryRun); err != nil {
+		return nil, err
+	}
 
 	// Every failure past this point records a failed attempt (issue #81). The
 	// deployments table still holds only confirmed history — a failure never

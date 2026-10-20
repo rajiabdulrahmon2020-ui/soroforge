@@ -20,6 +20,7 @@ import (
 	"log/slog"
 	"math/rand"
 	"net/url"
+	"strings"
 	"sync"
 	"time"
 
@@ -791,4 +792,13 @@ func (s *Service) confirm(ctx context.Context, client stellar.Client, hash strin
 			hash, result.Ledger, result.Status)
 	}
 	return result, nil
+}
+
+// checkRequireNotes validates that actions on networks with require_notes set
+// supply non-empty notes unless the run is a dry run (#154).
+func (s *Service) checkRequireNotes(r resolved, notes string, dryRun bool) error {
+	if r.Network.RequireNotes && !dryRun && strings.TrimSpace(notes) == "" {
+		return fmt.Errorf("network %q requires deploy notes: set require_notes is true in config; provide --notes (or notes in API) to record an audit trail (e.g. --notes \"OPS-1234: routine deploy\")", r.NetworkName)
+	}
+	return nil
 }

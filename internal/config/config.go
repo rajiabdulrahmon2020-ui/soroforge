@@ -90,6 +90,11 @@ type Network struct {
 	// rather than hanging. The HTTP API does not prompt; see README.
 	Protected bool `yaml:"protected"`
 
+	// RequireNotes, when set on a network, enforces that any deploy, upgrade,
+	// upload, or invoke on that network must provide a non-empty --notes string
+	// (or API notes field). Dry runs are exempt.
+	RequireNotes bool `yaml:"require_notes"`
+
 	// Webhooks lists endpoints notified after each confirmed deploy or upgrade.
 	// Optional.
 	Webhooks []Webhook `yaml:"webhooks"`
