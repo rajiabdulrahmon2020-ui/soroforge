@@ -7,8 +7,6 @@
 /soroforge.exe
 
 # Local secrets and environment — never commit these
-.env
-.env.local
 *.pem
 *.key
 keystore
@@ -27,6 +25,7 @@ coverage.*
 # Editors / OS / local tooling
 .DS_Store
 .idea/
-.vscode/
 .claude/
 *.swp
+config.bat
+node_modules
